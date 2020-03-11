@@ -1,0 +1,6 @@
+{
+  "parent": "technicalities:tube_module/lens",
+  "textures": {
+    "texture": "technicalities:blocks/tube_module/color_filter_purple"
+  }
+}

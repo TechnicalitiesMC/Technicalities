@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "P P",
+    "P P",
+    " P "
+  ],
+  "key": {
+    "P": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "result": {
+    "item": "technicalities:funnel",
+    "count": 1
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CDC",
+    "PGP",
+    "CCC"
+  ],
+  "key": {
+    "C": {
+      "tag": "forge:cobblestone"
+    },
+    "D": {
+      "item": "minecraft:dropper"
+    },
+    "P": {
+      "tag": "minecraft:planks"
+    },
+    "G": {
+      "tag": "forge:fence_gates"
+    }
+  },
+  "result": {
+    "item": "technicalities:filter",
+    "count": 1
+  }
+}

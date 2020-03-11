@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PTP"
+  ],
+  "key": {
+    "P": {
+      "item": "minecraft:piston"
+    },
+    "T": {
+      "item": "technicalities:transposer"
+    }
+  },
+  "result": {
+    "item": "technicalities:ejector",
+    "count": 1
+  }
+}

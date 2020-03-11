@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CDC",
+    "CPC",
+    "WXW"
+  ],
+  "key": {
+    "C": {
+      "tag": "forge:cobblestone"
+    },
+    "W": {
+      "tag": "minecraft:planks"
+    },
+    "X": {
+      "tag": "forge:chests/wooden"
+    },
+    "D": {
+      "item": "minecraft:dropper"
+    },
+    "P": {
+      "item": "minecraft:piston"
+    }
+  },
+  "result": {
+    "item": "technicalities:buffer",
+    "count": 1
+  }
+}

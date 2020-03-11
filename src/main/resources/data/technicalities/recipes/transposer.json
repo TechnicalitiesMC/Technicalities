@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CDC",
+    "CPC",
+    "IHI"
+  ],
+  "key": {
+    "C": {
+      "tag": "forge:cobblestone"
+    },
+    "I": {
+      "tag": "forge:ingots/iron"
+    },
+    "D": {
+      "item": "minecraft:dropper"
+    },
+    "P": {
+      "item": "minecraft:piston"
+    },
+    "H": {
+      "item": "minecraft:hopper"
+    }
+  },
+  "result": {
+    "item": "technicalities:transposer",
+    "count": 1
+  }
+}

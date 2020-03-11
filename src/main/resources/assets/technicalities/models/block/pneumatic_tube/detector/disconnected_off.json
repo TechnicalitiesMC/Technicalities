@@ -1,0 +1,6 @@
+{
+  "parent": "technicalities:block/pneumatic_tube/disconnected",
+  "textures": {
+    "tube": "technicalities:blocks/pneumatic_tube/detector_off"
+  }
+}

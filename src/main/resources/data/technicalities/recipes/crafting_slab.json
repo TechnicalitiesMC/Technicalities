@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SWS"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:smooth_stone_slab"
+    },
+    "W": {
+      "item": "minecraft:crafting_table"
+    }
+  },
+  "result": {
+    "item": "technicalities:crafting_slab",
+    "count": 1
+  }
+}

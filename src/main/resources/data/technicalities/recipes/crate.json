@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PSP",
+    "SCS",
+    "PSP"
+  ],
+  "key": {
+    "P": {
+      "item": "minecraft:oak_planks"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "C": {
+      "item": "minecraft:chest"
+    }
+  },
+  "result": {
+    "item": "technicalities:crate",
+    "count": 1
+  }
+}

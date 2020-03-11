@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "facing=down":  { "model": "technicalities:block/regulator", "x": 180 },
+    "facing=up":    { "model": "technicalities:block/regulator" },
+    "facing=north": { "model": "technicalities:block/regulator", "x": 90 },
+    "facing=south": { "model": "technicalities:block/regulator", "x": 90, "y": 180 },
+    "facing=west":  { "model": "technicalities:block/regulator", "x": 90, "y": 270 },
+    "facing=east":  { "model": "technicalities:block/regulator", "x": 90, "y": 90 }
+  }
+}

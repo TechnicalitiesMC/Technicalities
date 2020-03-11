@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=x":  { "model": "technicalities:block/barrel", "y": 90 },
+    "axis=z": { "model": "technicalities:block/barrel" },
+    "axis=y": { "model": "technicalities:block/barrel", "x": 90 }
+  }
+}

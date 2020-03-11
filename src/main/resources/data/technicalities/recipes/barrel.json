@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "LLL",
+    "P P",
+    "LLL"
+  ],
+  "key": {
+    "L": {
+      "item": "minecraft:oak_wood"
+    },
+    "P": {
+      "item": "minecraft:oak_planks"
+    }
+  },
+  "result": {
+    "item": "technicalities:barrel",
+    "count": 1
+  }
+}

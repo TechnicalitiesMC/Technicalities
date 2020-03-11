@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:glass_panes/colorless"
+    }
+  ],
+  "result": {
+    "item": "technicalities:tm_glass_lens",
+    "count": 2
+  }
+}

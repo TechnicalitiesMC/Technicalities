@@ -1,0 +1,100 @@
+{
+  "multipart": [
+    {
+      "when": { "triggered": "false", "down": "true" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/detector/connected_off", "x": 90 }
+    },
+    {
+      "when": { "triggered": "false", "down": "false" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/detector/disconnected_off", "x": 90 }
+    },
+    {
+      "when": { "triggered": "false", "up": "true" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/detector/connected_off", "x": 270 }
+    },
+    {
+      "when": { "triggered": "false", "up": "false" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/detector/disconnected_off", "x": 270 }
+    },
+    {
+      "when": { "triggered": "false", "north": "true" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/detector/connected_off" }
+    },
+    {
+      "when": { "triggered": "false", "north": "false" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/detector/disconnected_off" }
+    },
+    {
+      "when": { "triggered": "false", "south": "true" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/detector/connected_off", "y": 180 }
+    },
+    {
+      "when": { "triggered": "false", "south": "false" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/detector/disconnected_off", "y": 180 }
+    },
+    {
+      "when": { "triggered": "false", "east": "true" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/detector/connected_off", "y": 90 }
+    },
+    {
+      "when": { "triggered": "false", "east": "false" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/detector/disconnected_off", "y": 90 }
+    },
+    {
+      "when": { "triggered": "false", "west": "true" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/detector/connected_off", "y": 270 }
+    },
+    {
+      "when": { "triggered": "false", "west": "false" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/detector/disconnected_off", "y": 270 }
+    },
+    {
+      "when": { "triggered": "true", "down": "true" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/detector/connected_on", "x": 90 }
+    },
+    {
+      "when": { "triggered": "true", "down": "false" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/detector/disconnected_on", "x": 90 }
+    },
+    {
+      "when": { "triggered": "true", "up": "true" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/detector/connected_on", "x": 270 }
+    },
+    {
+      "when": { "triggered": "true", "up": "false" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/detector/disconnected_on", "x": 270 }
+    },
+    {
+      "when": { "triggered": "true", "north": "true" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/detector/connected_on" }
+    },
+    {
+      "when": { "triggered": "true", "north": "false" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/detector/disconnected_on" }
+    },
+    {
+      "when": { "triggered": "true", "south": "true" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/detector/connected_on", "y": 180 }
+    },
+    {
+      "when": { "triggered": "true", "south": "false" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/detector/disconnected_on", "y": 180 }
+    },
+    {
+      "when": { "triggered": "true", "east": "true" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/detector/connected_on", "y": 90 }
+    },
+    {
+      "when": { "triggered": "true", "east": "false" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/detector/disconnected_on", "y": 90 }
+    },
+    {
+      "when": { "triggered": "true", "west": "true" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/detector/connected_on", "y": 270 }
+    },
+    {
+      "when": { "triggered": "true", "west": "false" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/detector/disconnected_on", "y": 270 }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/redstone"
+    },
+    {
+      "item": "technicalities:pneumatic_tube"
+    }
+  ],
+  "result": {
+    "item": "technicalities:detector_tube",
+    "count": 1
+  }
+}

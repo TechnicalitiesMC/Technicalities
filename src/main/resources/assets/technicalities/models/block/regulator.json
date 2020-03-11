@@ -1,0 +1,9 @@
+{
+  "parent": "technicalities:block/orientable_with_back",
+  "textures": {
+    "particle": "technicalities:blocks/regulator/side",
+    "front": "technicalities:blocks/regulator/front",
+    "back": "technicalities:blocks/regulator/back",
+    "side": "technicalities:blocks/regulator/side"
+  }
+}

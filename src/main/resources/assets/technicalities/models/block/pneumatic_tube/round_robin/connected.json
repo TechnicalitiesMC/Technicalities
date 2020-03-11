@@ -1,0 +1,10 @@
+{
+  "parent": "technicalities:block/pneumatic_tube/connected",
+  "textures": {
+    "particle": "technicalities:blocks/pneumatic_tube/round_robin/texture",
+    "tube": "technicalities:blocks/pneumatic_tube/round_robin/texture",
+    "caps": "technicalities:blocks/pneumatic_tube/round_robin/caps",
+    "caps2": "technicalities:blocks/pneumatic_tube/round_robin/caps2",
+    "inside": "technicalities:blocks/pneumatic_tube/round_robin/inside"
+  }
+}

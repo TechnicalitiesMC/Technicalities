@@ -1,0 +1,85 @@
+{
+  "parent": "block/block",
+  "textures": {
+    "particle": "technicalities:blocks/pneumatic_tube/texture",
+    "tube_s": "technicalities:blocks/pneumatic_tube/straight",
+    "caps": "technicalities:blocks/pneumatic_tube/caps",
+    "inside_s": "technicalities:blocks/pneumatic_tube/inside_straight"
+  },
+  "elements": [
+    {
+      "from": [ 4, 0, 4 ],
+      "to":   [ 12, 16, 12 ],
+      "faces": {
+        "down":  { "texture": "#caps" },
+        "up":    { "texture": "#caps" },
+        "north": { "texture": "#tube_s" },
+        "south": { "texture": "#tube_s" },
+        "west":  { "texture": "#tube_s" },
+        "east":  { "texture": "#tube_s" }
+      }
+    },
+    {
+      "from": [ 11, 16, 11 ],
+      "to":   [ 5, 0, 5 ],
+      "faces": {
+        "north": { "texture": "#tube_s" },
+        "south": { "texture": "#tube_s" },
+        "west":  { "texture": "#tube_s" },
+        "east":  { "texture": "#tube_s" }
+      }
+    },
+    {
+      "from": [ 10, 16, 5 ],
+      "to":   [ 6, 0, 4 ],
+      "faces": {
+        "west":  { "texture": "#tube_s" },
+        "east":  { "texture": "#tube_s" }
+      }
+    },
+    {
+      "from": [ 10, 16, 12 ],
+      "to":   [ 6, 0, 11 ],
+      "faces": {
+        "west":  { "texture": "#tube_s" },
+        "east":  { "texture": "#tube_s" }
+      }
+    },
+    {
+      "from": [ 5, 16, 10 ],
+      "to":   [ 4, 0, 6 ],
+      "faces": {
+        "north": { "texture": "#tube_s" },
+        "south": { "texture": "#tube_s" }
+      }
+    },
+    {
+      "from": [ 12, 16, 10 ],
+      "to":   [ 11, 0, 6 ],
+      "faces": {
+        "north": { "texture": "#tube_s" },
+        "south": { "texture": "#tube_s" }
+      }
+    },
+    {
+      "from": [ 4.5, 0, 4.5 ],
+      "to": [ 11.5, 16, 11.5 ],
+      "faces": {
+        "north": { "texture": "#inside_s" },
+        "south": { "texture": "#inside_s" },
+        "west":  { "texture": "#inside_s" },
+        "east":  { "texture": "#inside_s" }
+      }
+    },
+    {
+      "from": [ 11.5, 16, 11.5 ],
+      "to": [ 4.5, 0, 4.5 ],
+      "faces": {
+        "north": { "texture": "#inside_s" },
+        "south": { "texture": "#inside_s" },
+        "west":  { "texture": "#inside_s" },
+        "east":  { "texture": "#inside_s" }
+      }
+    }
+  ]
+}

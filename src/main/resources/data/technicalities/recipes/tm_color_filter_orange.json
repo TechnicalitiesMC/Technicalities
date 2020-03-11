@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "technicalities:tm_color_filter",
+  "pattern": [
+    "LLL",
+    "LBL",
+    "LLL"
+  ],
+  "key": {
+    "L": {
+      "item": "technicalities:tm_glass_lens"
+    },
+    "B": {
+      "tag": "forge:dyes/orange"
+    }
+  },
+  "result": {
+    "item": "technicalities:tm_color_filter_orange",
+    "count": 8
+  }
+}

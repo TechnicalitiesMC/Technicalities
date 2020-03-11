@@ -1,0 +1,9 @@
+{
+  "parent": "technicalities:block/pneumatic_tube/straight_z",
+  "textures": {
+    "particle": "technicalities:blocks/pneumatic_tube/round_robin/texture",
+    "tube_s": "technicalities:blocks/pneumatic_tube/round_robin/straight",
+    "caps": "technicalities:blocks/pneumatic_tube/round_robin/caps",
+    "inside_s": "technicalities:blocks/pneumatic_tube/round_robin/inside_straight"
+  }
+}

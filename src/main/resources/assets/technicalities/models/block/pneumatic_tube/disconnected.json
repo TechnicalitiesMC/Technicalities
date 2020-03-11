@@ -1,0 +1,44 @@
+{
+  "parent": "block/block",
+  "textures": {
+    "particle": "technicalities:blocks/pneumatic_tube/texture",
+    "tube": "technicalities:blocks/pneumatic_tube/texture",
+    "inside": "technicalities:blocks/pneumatic_tube/inside"
+  },
+  "elements": [
+    {
+      "from": [4, 4, 4],
+      "to": [12, 12, 5],
+      "faces": {
+        "north": {"rotation": 180, "texture": "#tube"},
+        "south": {"texture": "#tube"}
+      }
+    },
+    {
+      "from": [10, 10, 5],
+      "to": [6, 6, 4],
+      "faces": {
+        "east": {"rotation": 270, "texture": "#tube"},
+        "west": {"rotation": 90, "texture": "#tube"},
+        "up": {"rotation": 180, "texture": "#tube"},
+        "down": {"texture": "#tube"}
+      }
+    },
+    {
+      "from": [4.5, 4.5, 4.5],
+      "to": [11.5, 11.5, 4.5],
+      "faces": {
+        "north": {"rotation": 180, "texture": "#inside"},
+        "south": {"texture": "#inside"}
+      }
+    },
+    {
+      "from": [11.5, 11.5, 4.5],
+      "to": [4.5, 4.5, 4.5],
+      "faces": {
+        "north": {"rotation": 180, "texture": "#inside"},
+        "south": {"texture": "#inside"}
+      }
+    }
+  ]
+}

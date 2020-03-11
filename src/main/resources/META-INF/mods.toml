@@ -1,0 +1,11 @@
+modLoader="javafml"
+loaderVersion="[26,)"
+
+[[mods]]
+modId="technicalities"
+version="${file.jarVersion}"
+displayName="Technicalities"
+authors="amadornes"
+description='''
+Engineer your own solutions to everyday Minecraft problems.
+'''

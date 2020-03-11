@@ -1,0 +1,6 @@
+{
+  "parent": "technicalities:block/filter/base",
+  "textures": {
+    "fill": "technicalities:blocks/filter/actions/cyan"
+  }
+}

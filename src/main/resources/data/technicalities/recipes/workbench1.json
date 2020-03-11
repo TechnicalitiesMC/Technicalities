@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SWS",
+    "PCP",
+    "PPP"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:smooth_stone_slab"
+    },
+    "W": {
+      "item": "minecraft:crafting_table"
+    },
+    "C": {
+      "item": "minecraft:chest"
+    },
+    "P": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "result": {
+    "item": "technicalities:workbench",
+    "count": 1
+  }
+}

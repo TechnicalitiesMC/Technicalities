@@ -1,0 +1,8 @@
+{
+  "parent": "technicalities:block/pneumatic_tube/disconnected",
+  "textures": {
+    "particle": "technicalities:blocks/pneumatic_tube/managed/texture",
+    "tube": "technicalities:blocks/pneumatic_tube/managed/texture",
+    "inside": "technicalities:blocks/pneumatic_tube/managed/inside"
+  }
+}

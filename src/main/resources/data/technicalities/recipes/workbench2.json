@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " S ",
+    "PCP",
+    "PPP"
+  ],
+  "key": {
+    "S": {
+      "item": "technicalities:crafting_slab"
+    },
+    "C": {
+      "item": "minecraft:chest"
+    },
+    "P": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "result": {
+    "item": "technicalities:workbench",
+    "count": 1
+  }
+}

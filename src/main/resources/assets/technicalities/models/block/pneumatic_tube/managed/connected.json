@@ -1,0 +1,10 @@
+{
+  "parent": "technicalities:block/pneumatic_tube/connected",
+  "textures": {
+    "particle": "technicalities:blocks/pneumatic_tube/managed/texture",
+    "tube": "technicalities:blocks/pneumatic_tube/managed/texture",
+    "caps": "technicalities:blocks/pneumatic_tube/managed/caps",
+    "caps2": "technicalities:blocks/pneumatic_tube/managed/caps2",
+    "inside": "technicalities:blocks/pneumatic_tube/managed/inside"
+  }
+}

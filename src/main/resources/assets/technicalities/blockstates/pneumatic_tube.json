@@ -1,0 +1,154 @@
+{
+  "multipart": [
+    {
+      "when": { "OR": [
+        { "down": "true", "up": "false", "north": "false", "south": "false", "west": "false", "east": "false" },
+        { "down": "true", "north": "true" },
+        { "down": "true", "south": "true" },
+        { "down": "true", "west":  "true" },
+        { "down": "true", "east":  "true" }
+      ] },
+      "apply": { "model": "technicalities:block/pneumatic_tube/connected", "x": 90 }
+    },
+    {
+      "when": { "OR": [
+        { "down": "false", "north": "false", "south": "false", "west": "false", "east": "false" },
+        { "down": "false", "north": "true", "south": "true", "west": "true", "east": "true" },
+        { "down": "false", "north": "true", "south": "false" },
+        { "down": "false", "north": "false", "south": "true" },
+        { "down": "false", "up": "true", "north": "true", "south": "true" },
+        { "down": "false", "west": "true", "east": "false" },
+        { "down": "false", "west": "false", "east": "true" },
+        { "down": "false", "up": "true", "west": "true", "east": "true" }
+      ] },
+      "apply": { "model": "technicalities:block/pneumatic_tube/disconnected", "x": 90 }
+    },
+    {
+      "when": { "OR": [
+        { "up": "true", "down": "false", "north": "false", "south": "false", "west": "false", "east": "false" },
+        { "up": "true", "north": "true" },
+        { "up": "true", "south": "true" },
+        { "up": "true", "west":  "true" },
+        { "up": "true", "east":  "true" }
+      ] },
+      "apply": { "model": "technicalities:block/pneumatic_tube/connected", "x": 270 }
+    },
+    {
+      "when": { "OR": [
+        { "up": "false", "north": "false", "south": "false", "west": "false", "east": "false" },
+        { "up": "false", "north": "true", "south": "true", "west": "true", "east": "true" },
+        { "up": "false", "north": "true", "south": "false" },
+        { "up": "false", "north": "false", "south": "true" },
+        { "up": "false", "down": "true", "north": "true", "south": "true" },
+        { "up": "false", "west": "true", "east": "false" },
+        { "up": "false", "west": "false", "east": "true" },
+        { "up": "false", "down": "true", "west": "true", "east": "true" }
+      ] },
+      "apply": { "model": "technicalities:block/pneumatic_tube/disconnected", "x": 270 }
+    },
+    {
+      "when": { "OR": [
+        { "north": "true", "south": "false", "west": "false", "east": "false", "down": "false", "up": "false" },
+        { "north": "true", "west": "true" },
+        { "north": "true", "east": "true" },
+        { "north": "true", "down":  "true" },
+        { "north": "true", "up":  "true" }
+      ] },
+      "apply": { "model": "technicalities:block/pneumatic_tube/connected" }
+    },
+    {
+      "when": { "OR": [
+        { "north": "false", "west": "false", "east": "false", "down": "false", "up": "false" },
+        { "north": "false", "west": "true", "east": "true", "down": "true", "up": "true" },
+        { "north": "false", "west": "true", "east": "false" },
+        { "north": "false", "west": "false", "east": "true" },
+        { "north": "false", "south": "true", "west": "true", "east": "true" },
+        { "north": "false", "down": "true", "up": "false" },
+        { "north": "false", "down": "false", "up": "true" },
+        { "north": "false", "south": "true", "down": "true", "up": "true" }
+      ] },
+      "apply": { "model": "technicalities:block/pneumatic_tube/disconnected" }
+    },
+    {
+      "when": { "OR": [
+        { "south": "true", "north": "false", "west": "false", "east": "false", "down": "false", "up": "false" },
+        { "south": "true", "west": "true" },
+        { "south": "true", "east": "true" },
+        { "south": "true", "down":  "true" },
+        { "south": "true", "up":  "true" }
+      ] },
+      "apply": { "model": "technicalities:block/pneumatic_tube/connected", "y": 180}
+    },
+    {
+      "when": { "OR": [
+        { "south": "false", "west": "false", "east": "false", "down": "false", "up": "false" },
+        { "south": "false", "west": "true", "east": "true", "down": "true", "up": "true" },
+        { "south": "false", "west": "true", "east": "false" },
+        { "south": "false", "west": "false", "east": "true" },
+        { "south": "false", "north": "true", "west": "true", "east": "true" },
+        { "south": "false", "down": "true", "up": "false" },
+        { "south": "false", "down": "false", "up": "true" },
+        { "south": "false", "north": "true", "down": "true", "up": "true" }
+      ] },
+      "apply": { "model": "technicalities:block/pneumatic_tube/disconnected", "y": 180 }
+    },
+    {
+      "when": { "OR": [
+        { "west": "true", "east": "false", "down": "false", "up": "false", "north": "false", "south": "false" },
+        { "west": "true", "down": "true" },
+        { "west": "true", "up": "true" },
+        { "west": "true", "north":  "true" },
+        { "west": "true", "south":  "true" }
+      ] },
+      "apply": { "model": "technicalities:block/pneumatic_tube/connected", "y": 270 }
+    },
+    {
+      "when": { "OR": [
+        { "west": "false", "down": "false", "up": "false", "north": "false", "south": "false" },
+        { "west": "false", "down": "true", "up": "true", "north": "true", "south": "true" },
+        { "west": "false", "down": "true", "up": "false" },
+        { "west": "false", "down": "false", "up": "true" },
+        { "west": "false", "east": "true", "down": "true", "up": "true" },
+        { "west": "false", "north": "true", "south": "false" },
+        { "west": "false", "north": "false", "south": "true" },
+        { "west": "false", "east": "true", "north": "true", "south": "true" }
+      ] },
+      "apply": { "model": "technicalities:block/pneumatic_tube/disconnected", "y": 270 }
+    },
+    {
+      "when": { "OR": [
+        { "east": "true", "west": "false", "down": "false", "up": "false", "north": "false", "south": "false" },
+        { "east": "true", "down": "true" },
+        { "east": "true", "up": "true" },
+        { "east": "true", "north":  "true" },
+        { "east": "true", "south":  "true" }
+      ] },
+      "apply": { "model": "technicalities:block/pneumatic_tube/connected", "y": 90 }
+    },
+    {
+      "when": { "OR": [
+        { "east": "false", "down": "false", "up": "false", "north": "false", "south": "false" },
+        { "east": "false", "down": "true", "up": "true", "north": "true", "south": "true" },
+        { "east": "false", "down": "true", "up": "false" },
+        { "east": "false", "down": "false", "up": "true" },
+        { "east": "false", "west": "true", "down": "true", "up": "true" },
+        { "east": "false", "north": "true", "south": "false" },
+        { "east": "false", "north": "false", "south": "true" },
+        { "east": "false", "west": "true", "north": "true", "south": "true" }
+      ] },
+      "apply": { "model": "technicalities:block/pneumatic_tube/disconnected", "y": 90 }
+    },
+    {
+      "when": { "down": "false", "up": "false", "north": "false", "south": "false", "west": "true", "east": "true" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/straight_x" }
+    },
+    {
+      "when": { "down": "true", "up": "true", "north": "false", "south": "false", "west": "false", "east": "false" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/straight_y" }
+    },
+    {
+      "when": { "down": "false", "up": "false", "north": "true", "south": "true", "west": "false", "east": "false" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/straight_z" }
+    }
+  ]
+}

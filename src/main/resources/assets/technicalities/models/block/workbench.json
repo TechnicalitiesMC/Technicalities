@@ -1,0 +1,9 @@
+{
+  "parent": "technicalities:block/orientable_with_back",
+  "textures": {
+    "particle": "technicalities:blocks/workbench/side",
+    "front": "technicalities:blocks/workbench/top",
+    "back": "technicalities:blocks/workbench/bottom",
+    "side": "technicalities:blocks/workbench/side"
+  }
+}

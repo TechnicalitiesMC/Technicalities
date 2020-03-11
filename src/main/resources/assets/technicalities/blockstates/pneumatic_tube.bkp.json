@@ -1,0 +1,52 @@
+{
+  "multipart": [
+    {
+      "when": { "down": "true" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/connected", "x": 90 }
+    },
+    {
+      "when": { "down": "false" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/disconnected", "x": 90 }
+    },
+    {
+      "when": { "up": "true" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/connected", "x": 270 }
+    },
+    {
+      "when": { "up": "false" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/disconnected", "x": 270 }
+    },
+    {
+      "when": { "north": "true" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/connected" }
+    },
+    {
+      "when": { "north": "false" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/disconnected" }
+    },
+    {
+      "when": { "south": "true" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/connected", "y": 180 }
+    },
+    {
+      "when": { "south": "false" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/disconnected", "y": 180 }
+    },
+    {
+      "when": { "east": "true" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/connected", "y": 90 }
+    },
+    {
+      "when": { "east": "false" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/disconnected", "y": 90 }
+    },
+    {
+      "when": { "west": "true" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/connected", "y": 270 }
+    },
+    {
+      "when": { "west": "false" },
+      "apply": { "model": "technicalities:block/pneumatic_tube/disconnected", "y": 270 }
+    }
+  ]
+}

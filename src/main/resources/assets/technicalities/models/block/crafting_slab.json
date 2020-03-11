@@ -1,0 +1,21 @@
+{
+  "parent": "block/block",
+  "textures": {
+    "particle": "technicalities:blocks/crafting_slab/side",
+    "top": "technicalities:blocks/crafting_slab/top",
+    "bottom": "technicalities:blocks/crafting_slab/bottom",
+    "side": "technicalities:blocks/crafting_slab/side"
+  },
+  "elements":[{
+    "from": [ 0, 0, 0 ],
+    "to": [ 16, 6, 16 ],
+    "faces": {
+      "down":  { "texture": "#bottom" },
+      "up":    { "texture": "#top" },
+      "north": { "texture": "#side" },
+      "south": { "texture": "#side" },
+      "west":  { "texture": "#side" },
+      "east":  { "texture": "#side" }
+    }
+  }]
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "technicalities:block/pneumatic_tube/item",
+  "textures": {
+    "side": "technicalities:blocks/pneumatic_tube/managed/texture",
+    "inside": "technicalities:blocks/pneumatic_tube/managed/inside",
+    "caps": "technicalities:blocks/pneumatic_tube/managed/caps"
+  }
+}

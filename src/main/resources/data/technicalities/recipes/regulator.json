@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GTG",
+    "GOG",
+    "PPP"
+  ],
+  "key": {
+    "G": {
+      "tag": "forge:ingots/gold"
+    },
+    "T": {
+      "item": "technicalities:transposer"
+    },
+    "O": {
+      "item": "minecraft:observer"
+    },
+    "P": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "result": {
+    "item": "technicalities:regulator",
+    "count": 1
+  }
+}

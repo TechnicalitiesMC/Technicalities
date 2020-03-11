@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "LLL",
+    "LSL",
+    "LLL"
+  ],
+  "key": {
+    "L": {
+      "item": "technicalities:tm_glass_lens"
+    },
+    "S": {
+      "tag": "forge:slimeballs"
+    }
+  },
+  "result": {
+    "item": "technicalities:tm_slimy_membrane",
+    "count": 8
+  }
+}

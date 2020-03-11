@@ -1,0 +1,6 @@
+{
+  "parent": "technicalities:tube_module/cuboid",
+  "textures": {
+    "texture": "technicalities:blocks/tube_module/filter_front"
+  }
+}

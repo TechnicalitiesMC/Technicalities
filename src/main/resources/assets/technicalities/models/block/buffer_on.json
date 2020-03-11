@@ -1,0 +1,9 @@
+{
+  "parent": "technicalities:block/orientable_with_back",
+  "textures": {
+    "particle": "technicalities:blocks/buffer/side_on",
+    "front": "technicalities:blocks/buffer/front",
+    "back": "technicalities:blocks/buffer/back",
+    "side": "technicalities:blocks/buffer/side_on"
+  }
+}

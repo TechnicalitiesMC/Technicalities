@@ -1,0 +1,7 @@
+{
+  "parent": "technicalities:block/pneumatic_tube/item",
+  "textures": {
+    "side": "technicalities:blocks/pneumatic_tube/detector_off",
+    "inside": "technicalities:blocks/pneumatic_tube/inside"
+  }
+}
