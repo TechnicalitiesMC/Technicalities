@@ -15,9 +15,11 @@ import com.technicalitiesmc.pneumatics.tube.*;
 import com.technicalitiesmc.pneumatics.tube.module.TubeModule;
 import com.technicalitiesmc.pneumatics.tube.route.RoutingStrategy;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -61,6 +63,18 @@ public class TubeComponent extends TKBlockComponent.WithData<TubeComponent.Data>
             routingStrategyFactory.get(),
             stackRoutedCallback
         ));
+    }
+
+    @Override
+    protected NonNullList<ItemStack> getAdditionalDrops(World world, BlockPos pos, BlockState state) {
+        NonNullList<ItemStack> list = NonNullList.create();
+        Data data = getData(world, pos);
+        if (data != null) {
+            for (MovingTubeStack stack : data.tube.getStacks()) {
+                list.add(stack.getStack());
+            }
+        }
+        return list;
     }
 
     @Override
