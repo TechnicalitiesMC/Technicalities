@@ -38,7 +38,7 @@ public class DroppingItemHandler implements IItemHandler {
     @Override
     public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
         if (entities[slot] != null) return stack;
-        if (!simulate) return ItemStack.EMPTY;
+        if (simulate) return ItemStack.EMPTY;
         ItemEntity entity = new ItemEntity(world.getWorld(), 0, 0, 0, stack.copy());
         entity.setDefaultPickupDelay();
         entityConfigurator.accept(entity);

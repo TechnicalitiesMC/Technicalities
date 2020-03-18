@@ -4,6 +4,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.PrimitiveIterator;
@@ -36,10 +37,11 @@ public class ItemHandlerExtractionQuery {
     }
 
     public Extraction extract(ItemFilter filter) {
-        return extract(filter, defaultVisitOrder(size));
+        return extract(filter, null);
     }
 
-    public Extraction extract(ItemFilter filter, PrimitiveIterator.OfInt visitOrder) {
+    public Extraction extract(ItemFilter filter, @Nullable PrimitiveIterator.OfInt visitOrder) {
+        if(visitOrder == null) visitOrder = defaultVisitOrder(size);
         ItemStack stack = ItemStack.EMPTY;
         int extractedAmount = 0;
         int minExtracted = 0, maxExtracted = 0;

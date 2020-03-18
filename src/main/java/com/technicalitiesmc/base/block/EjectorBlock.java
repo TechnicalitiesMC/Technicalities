@@ -33,6 +33,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
+import java.util.PrimitiveIterator;
 
 public class EjectorBlock extends TKBlock.WithData<EjectorBlock.Data> {
 
@@ -78,14 +79,16 @@ public class EjectorBlock extends TKBlock.WithData<EjectorBlock.Data> {
         Data data = getData(world, pos);
         boolean isWhitelist = data.filterType.get() == FilterType.WHITELIST;
         boolean isExact = isWhitelist && data.whitelistMode.get() == WhitelistMode.EXACT;
+        boolean isSingle = !isWhitelist && data.blacklistMode.get() == BlacklistMode.SINGLE;
 
         ItemHandlerExtractionQuery extractionQuery = new ItemHandlerExtractionQuery(backInv);
         ItemHandlerInsertionQuery insertionQuery = new ItemHandlerInsertionQuery(frontInv);
+        PrimitiveIterator.OfInt visitOrder = isSingle ? ItemHandlerExtractionQuery.defaultVisitOrder(backInv.getSlots()) : null;
         for (ItemFilter filter : filters) {
             rejects.clear();
             ItemStack extracted;
             do {
-                ItemHandlerExtractionQuery.Extraction extraction = extractionQuery.extract(filter);
+                ItemHandlerExtractionQuery.Extraction extraction = extractionQuery.extract(filter, visitOrder);
                 extracted = extraction.getExtracted();
                 if (extracted.isEmpty()) {
                     if (isExact) {
