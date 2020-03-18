@@ -4,9 +4,13 @@ import com.technicalitiesmc.base.TKBase;
 import com.technicalitiesmc.base.container.BufferContainer;
 import com.technicalitiesmc.lib.block.Component;
 import com.technicalitiesmc.lib.block.TKBlock;
+import com.technicalitiesmc.lib.block.TKBlockData;
 import com.technicalitiesmc.lib.block.components.*;
 import com.technicalitiesmc.lib.container.TKContainer;
 import com.technicalitiesmc.lib.inventory.InventoryUtils;
+import com.technicalitiesmc.lib.serial.Serialize;
+import com.technicalitiesmc.lib.util.MutedState;
+import com.technicalitiesmc.lib.util.value.Value;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
@@ -24,7 +28,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.EmptyHandler;
 
-public class BufferBlock extends TKBlock.WithNoData {
+public class BufferBlock extends TKBlock.WithData<BufferBlock.Data> {
 
     @CapabilityInject(IItemHandler.class)
     private static Capability<IItemHandler> ITEM_HANDLER;
@@ -46,11 +50,11 @@ public class BufferBlock extends TKBlock.WithNoData {
     });
 
     public BufferBlock() {
-        super(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.5F));
+        super(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.5F), Data::new);
     }
 
     private TKContainer createContainer(IWorld world, BlockPos pos, BlockState state, int id, PlayerInventory playerInv, PlayerEntity entity) {
-        return new BufferContainer(id, playerInv, inv.at(world, pos));
+        return new BufferContainer(id, playerInv, inv.at(world, pos), getData(world, pos).muted);
     }
 
     private void onTriggered(World world, BlockPos pos, BlockState state) {
@@ -61,7 +65,8 @@ public class BufferBlock extends TKBlock.WithNoData {
             InventoryUtils.transferStack(inv.at(world, pos).asItemHandler(), neighbor);
         }
 
-        world.playSound(null, pos, TKBase.SOUND_SMALL_PISTON, SoundCategory.BLOCKS, 0.25F, 1F);
+        if (getData(world, pos).muted.get() == MutedState.MUTED) return;
+        TKBase.playSmallPistonSound(world, pos);
     }
 
     private LazyOptional<IItemHandler> getItemHandler(IWorld world, BlockPos pos, Direction face) {
@@ -76,6 +81,11 @@ public class BufferBlock extends TKBlock.WithNoData {
     @Override
     protected boolean isNormalCube(IBlockReader world, BlockPos pos, BlockState state) {
         return false;
+    }
+
+    static class Data extends TKBlockData {
+        @Serialize
+        private final Value<MutedState> muted = new Value<>(MutedState.UNMUTED);
     }
 
 }

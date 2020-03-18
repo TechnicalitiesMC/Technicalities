@@ -9,6 +9,7 @@ import com.technicalitiesmc.lib.block.components.*;
 import com.technicalitiesmc.lib.container.TKContainer;
 import com.technicalitiesmc.lib.inventory.*;
 import com.technicalitiesmc.lib.serial.Serialize;
+import com.technicalitiesmc.lib.util.MutedState;
 import com.technicalitiesmc.lib.util.TooltipEnabled;
 import com.technicalitiesmc.lib.util.value.Value;
 import net.minecraft.block.Block;
@@ -60,7 +61,7 @@ public class EjectorBlock extends TKBlock.WithData<EjectorBlock.Data> {
 
     private TKContainer createContainer(IWorld world, BlockPos pos, BlockState state, int id, PlayerInventory playerInv, PlayerEntity player) {
         Data data = getData(world, pos);
-        return new EjectorContainer(id, playerInv, filter.at(world, pos), data.filterType, data.whitelistMode, data.blacklistMode);
+        return new EjectorContainer(id, playerInv, filter.at(world, pos), data.filterType, data.whitelistMode, data.blacklistMode, data.muted);
     }
 
     private void onTriggered(World world, BlockPos pos, BlockState state) {
@@ -124,7 +125,8 @@ public class EjectorBlock extends TKBlock.WithData<EjectorBlock.Data> {
     }
 
     private void playSound(World world, BlockPos pos) {
-        world.playSound(null, pos, TKBase.SOUND_SMALL_PISTON, SoundCategory.BLOCKS, 0.25F, 1F);
+        if (getData(world, pos).muted.get() == MutedState.MUTED) return;
+        TKBase.playSmallPistonSound(world, pos);
     }
 
     private ItemFilter[] getFilters(IBlockReader world, BlockPos pos, ItemSet rejects) {
@@ -164,6 +166,8 @@ public class EjectorBlock extends TKBlock.WithData<EjectorBlock.Data> {
         private final Value<WhitelistMode> whitelistMode = new Value<>(WhitelistMode.STRICT);
         @Serialize
         private final Value<BlacklistMode> blacklistMode = new Value<>(BlacklistMode.STACK);
+        @Serialize
+        private final Value<MutedState> muted = new Value<>(MutedState.UNMUTED);
     }
 
     public enum FilterType implements TooltipEnabled.Auto {

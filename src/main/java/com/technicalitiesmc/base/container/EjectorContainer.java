@@ -7,6 +7,7 @@ import com.technicalitiesmc.lib.container.TKContainerAdapter;
 import com.technicalitiesmc.lib.container.component.EnumSelectorComponent;
 import com.technicalitiesmc.lib.inventory.Inventory;
 import com.technicalitiesmc.lib.inventory.SimpleInventory;
+import com.technicalitiesmc.lib.util.MutedState;
 import com.technicalitiesmc.lib.util.TooltipEnabled;
 import com.technicalitiesmc.lib.util.value.Reference;
 import com.technicalitiesmc.lib.util.value.Value;
@@ -33,7 +34,8 @@ public class EjectorContainer extends TKContainer {
     private final Reference<EjectorBlock.BlacklistMode> blacklistMode;
 
     public EjectorContainer(int windowId, PlayerInventory playerInventory, Inventory filterInv, Reference<EjectorBlock.FilterType> filterType,
-                            Reference<EjectorBlock.WhitelistMode> whitelistMode, Reference<EjectorBlock.BlacklistMode> blacklistMode) {
+                            Reference<EjectorBlock.WhitelistMode> whitelistMode, Reference<EjectorBlock.BlacklistMode> blacklistMode,
+                            Value<MutedState> muted) {
         super(TYPE, windowId);
 
         this.filterType = filterType;
@@ -49,6 +51,8 @@ public class EjectorContainer extends TKContainer {
 
         updateModes(filterType.get());
 
+        addComponent(new EnumSelectorComponent<>(162, 6, 8, 8, 84, 0, MutedState.class, muted, true));
+
         addComponent(new EnumSelectorComponent<>(136, 20, 12, 12, 0, 0, EjectorBlock.FilterType.class, Reference.of(filterType::get, this::setType), true));
         addComponent(new EnumSelectorComponent<>(136, 38, 12, 12, 24, 0, Mode.class, Reference.of(this::getMode, this::setMode), modes, true));
     }
@@ -56,7 +60,8 @@ public class EjectorContainer extends TKContainer {
     private EjectorContainer(int windowId, PlayerInventory playerInventory) {
         // TODO: Work out why using a different initial value other than the first enum entry breaks client sync entirely
         this(windowId, playerInventory, new SimpleInventory(FILTER_SIZE), new Value<>(EjectorBlock.FilterType.WHITELIST),
-            new Value<>(EjectorBlock.WhitelistMode.STRICT), new Value<>(EjectorBlock.BlacklistMode.SINGLE));
+            new Value<>(EjectorBlock.WhitelistMode.STRICT), new Value<>(EjectorBlock.BlacklistMode.SINGLE),
+            new Value<>(MutedState.UNMUTED));
     }
 
     private void setType(EjectorBlock.FilterType type) {

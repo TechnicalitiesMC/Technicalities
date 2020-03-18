@@ -14,7 +14,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 public class TKBase {
@@ -121,4 +124,7 @@ public class TKBase {
         return new SoundEvent(new ResourceLocation(Technicalities.MODID, name));
     }
 
+    public static void playSmallPistonSound(World world, BlockPos pos) {
+        world.playSound(null, pos, TKBase.SOUND_SMALL_PISTON, SoundCategory.BLOCKS, 0.15F, 1F);
+    }
 }

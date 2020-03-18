@@ -7,6 +7,7 @@ import com.technicalitiesmc.lib.container.TKContainerAdapter;
 import com.technicalitiesmc.lib.container.component.EnumSelectorComponent;
 import com.technicalitiesmc.lib.inventory.Inventory;
 import com.technicalitiesmc.lib.inventory.SimpleInventory;
+import com.technicalitiesmc.lib.util.MutedState;
 import com.technicalitiesmc.lib.util.TooltipEnabled;
 import com.technicalitiesmc.lib.util.value.Reference;
 import com.technicalitiesmc.lib.util.value.Value;
@@ -33,7 +34,8 @@ public class TransposerContainer extends TKContainer {
     private final Reference<TransposerBlock.BlacklistMode> blacklistMode;
 
     public TransposerContainer(int windowId, PlayerInventory playerInventory, Inventory filterInv, Reference<TransposerBlock.FilterType> filterType,
-                               Reference<TransposerBlock.WhitelistMode> whitelistMode, Reference<TransposerBlock.BlacklistMode> blacklistMode) {
+                               Reference<TransposerBlock.WhitelistMode> whitelistMode, Reference<TransposerBlock.BlacklistMode> blacklistMode,
+                               Value<MutedState> muted) {
         super(TYPE, windowId);
 
         this.filterType = filterType;
@@ -49,13 +51,16 @@ public class TransposerContainer extends TKContainer {
 
         updateModes(filterType.get());
 
+        addComponent(new EnumSelectorComponent<>(162, 6, 8, 8, 84, 0, MutedState.class, muted, true));
+
         addComponent(new EnumSelectorComponent<>(136, 20, 12, 12, 0, 0, TransposerBlock.FilterType.class, Reference.of(filterType::get, this::setType), true));
         addComponent(new EnumSelectorComponent<>(136, 38, 12, 12, 24, 0, Mode.class, Reference.of(this::getMode, this::setMode), modes, true));
     }
 
     private TransposerContainer(int windowId, PlayerInventory playerInventory) {
         this(windowId, playerInventory, new SimpleInventory(FILTER_SIZE), new Value<>(TransposerBlock.FilterType.WHITELIST),
-            new Value<>(TransposerBlock.WhitelistMode.STRICT), new Value<>(TransposerBlock.BlacklistMode.SINGLE));
+            new Value<>(TransposerBlock.WhitelistMode.STRICT), new Value<>(TransposerBlock.BlacklistMode.SINGLE),
+            new Value<>(MutedState.UNMUTED));
     }
 
     private void setType(TransposerBlock.FilterType type) {

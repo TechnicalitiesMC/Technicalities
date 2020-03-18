@@ -4,8 +4,11 @@ import com.technicalitiesmc.Technicalities;
 import com.technicalitiesmc.lib.container.TKContainer;
 import com.technicalitiesmc.lib.container.TKContainerAdapter;
 import com.technicalitiesmc.lib.container.TKInventorySlot;
+import com.technicalitiesmc.lib.container.component.EnumSelectorComponent;
 import com.technicalitiesmc.lib.inventory.Inventory;
 import com.technicalitiesmc.lib.inventory.SimpleInventory;
+import com.technicalitiesmc.lib.util.MutedState;
+import com.technicalitiesmc.lib.util.value.Value;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ContainerType;
@@ -24,7 +27,7 @@ public class QueueContainer extends TKContainer {
 
     private final Inventory storageInv;
 
-    public QueueContainer(int windowId, PlayerInventory playerInventory, Inventory storageInv) {
+    public QueueContainer(int windowId, PlayerInventory playerInventory, Inventory storageInv, Value<MutedState> muted) {
         super(TYPE, windowId);
         this.storageInv = storageInv;
 
@@ -35,10 +38,12 @@ public class QueueContainer extends TKContainer {
         addShiftClickTargets(storage, playerHotbar.reversed(), playerInv.reversed());
         addShiftClickTargets(playerInv, storage);
         addShiftClickTargets(playerHotbar, storage);
+
+        addComponent(new EnumSelectorComponent<>(162, 6, 8, 8, 84, 0, MutedState.class, muted, true));
     }
 
     private QueueContainer(int windowId, PlayerInventory playerInventory) {
-        this(windowId, playerInventory, new SimpleInventory(QUEUE_SIZE));
+        this(windowId, playerInventory, new SimpleInventory(QUEUE_SIZE), new Value<>(MutedState.UNMUTED));
     }
 
     private Slot createStorageSlot(int x, int y, int index) {

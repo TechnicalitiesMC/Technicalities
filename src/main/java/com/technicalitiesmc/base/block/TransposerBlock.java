@@ -12,6 +12,7 @@ import com.technicalitiesmc.lib.inventory.InventoryUtils;
 import com.technicalitiesmc.lib.inventory.ItemFilter;
 import com.technicalitiesmc.lib.inventory.ItemSet;
 import com.technicalitiesmc.lib.serial.Serialize;
+import com.technicalitiesmc.lib.util.MutedState;
 import com.technicalitiesmc.lib.util.TooltipEnabled;
 import com.technicalitiesmc.lib.util.value.Value;
 import com.technicalitiesmc.pneumatics.block.FilterBlock;
@@ -62,7 +63,7 @@ public class TransposerBlock extends TKBlock.WithData<TransposerBlock.Data> {
 
     private TKContainer createContainer(IWorld world, BlockPos pos, BlockState state, int id, PlayerInventory playerInv, PlayerEntity entity) {
         Data data = getData(world, pos);
-        return new TransposerContainer(id, playerInv, filter.at(world, pos), data.filterType, data.whitelistMode, data.blacklistMode);
+        return new TransposerContainer(id, playerInv, filter.at(world, pos), data.filterType, data.whitelistMode, data.blacklistMode, data.muted);
     }
 
     private void onTriggered(World world, BlockPos pos, BlockState state) {
@@ -75,7 +76,8 @@ public class TransposerBlock extends TKBlock.WithData<TransposerBlock.Data> {
             InventoryUtils.transferStack(src, dst, filter);
         }
 
-        world.playSound(null, pos, TKBase.SOUND_SMALL_PISTON, SoundCategory.BLOCKS, 0.25F, 1F);
+        if (getData(world, pos).muted.get() == MutedState.MUTED) return;
+        TKBase.playSmallPistonSound(world, pos);
     }
 
     private ItemFilter getFilter(IBlockReader world, BlockPos pos) {
@@ -143,6 +145,8 @@ public class TransposerBlock extends TKBlock.WithData<TransposerBlock.Data> {
         private final Value<WhitelistMode> whitelistMode = new Value<>(WhitelistMode.STRICT);
         @Serialize
         private final Value<BlacklistMode> blacklistMode = new Value<>(BlacklistMode.STACK);
+        @Serialize
+        private final Value<MutedState> muted = new Value<>(MutedState.UNMUTED);
     }
 
     public enum FilterType implements TooltipEnabled.Auto {

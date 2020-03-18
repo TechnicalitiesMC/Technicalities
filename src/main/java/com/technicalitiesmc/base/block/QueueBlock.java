@@ -9,6 +9,9 @@ import com.technicalitiesmc.lib.block.components.*;
 import com.technicalitiesmc.lib.container.TKContainer;
 import com.technicalitiesmc.lib.inventory.Inventory;
 import com.technicalitiesmc.lib.inventory.InventoryUtils;
+import com.technicalitiesmc.lib.serial.Serialize;
+import com.technicalitiesmc.lib.util.MutedState;
+import com.technicalitiesmc.lib.util.value.Value;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
@@ -31,7 +34,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class QueueBlock extends TKBlock.WithNoData {
+public class QueueBlock extends TKBlock.WithData<QueueBlock.Data> {
 
     @CapabilityInject(IItemHandler.class)
     private static Capability<IItemHandler> ITEM_HANDLER;
@@ -52,11 +55,11 @@ public class QueueBlock extends TKBlock.WithNoData {
     private final ClickGUI gui = new ClickGUI.Container(QueueContainer.NAME, this::createContainer);
 
     public QueueBlock() {
-        super(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.5F));
+        super(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.5F), Data::new);
     }
 
     private TKContainer createContainer(IWorld world, BlockPos pos, BlockState state, int id, PlayerInventory playerInv, PlayerEntity player) {
-        return new QueueContainer(id, playerInv, queue.at(world, pos));
+        return new QueueContainer(id, playerInv, queue.at(world, pos), getData(world, pos).muted);
     }
 
     private void onInventoryChanged(World world, BlockPos pos) {
@@ -85,7 +88,9 @@ public class QueueBlock extends TKBlock.WithNoData {
                 queueStorage.set(0, leftover);
             }
         }
-        world.playSound(null, pos, TKBase.SOUND_SMALL_PISTON, SoundCategory.BLOCKS, 0.25F, 1F);
+
+        if (getData(world, pos).muted.get() == MutedState.MUTED) return;
+        TKBase.playSmallPistonSound(world, pos);
     }
 
     @Override
@@ -95,7 +100,7 @@ public class QueueBlock extends TKBlock.WithNoData {
 
     @Nonnull
     @Override
-    protected <T> LazyOptional<T> getCapability(IWorld world, BlockPos pos, @Nullable Direction face, TKBlockData data, Capability<T> capability) {
+    protected <T> LazyOptional<T> getCapability(IWorld world, BlockPos pos, @Nullable Direction face, Data data, Capability<T> capability) {
         BlockState state = world.getBlockState(pos);
         Direction front = direction.get(state), back = front.getOpposite();
 
@@ -106,6 +111,11 @@ public class QueueBlock extends TKBlock.WithNoData {
         }
 
         return LazyOptional.empty();
+    }
+
+    static class Data extends TKBlockData {
+        @Serialize
+        private final Value<MutedState> muted = new Value<>(MutedState.UNMUTED);
     }
 
     private static class InputInventory implements IItemHandler {
