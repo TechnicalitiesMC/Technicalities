@@ -120,6 +120,11 @@ public class TransposerBlock extends TKBlock.WithData<TransposerBlock.Data> {
         });
     }
 
+    @Override
+    protected boolean isNormalCube(IBlockReader world, BlockPos pos, BlockState state) {
+        return false;
+    }
+
     @Nonnull
     @Override
     protected <T> LazyOptional<T> getCapability(IWorld world, BlockPos pos, @Nullable Direction face, Data data, Capability<T> capability) {

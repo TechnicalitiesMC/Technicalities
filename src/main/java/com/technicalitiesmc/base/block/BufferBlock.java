@@ -15,6 +15,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
@@ -70,6 +71,11 @@ public class BufferBlock extends TKBlock.WithNoData {
         } else {
             return LazyOptional.of(() -> inv.at(world, pos).asItemHandler());
         }
+    }
+
+    @Override
+    protected boolean isNormalCube(IBlockReader world, BlockPos pos, BlockState state) {
+        return false;
     }
 
 }

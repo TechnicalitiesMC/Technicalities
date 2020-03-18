@@ -26,6 +26,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
@@ -58,6 +59,11 @@ public class RegulatorBlock extends TKBlock.WithData<RegulatorBlock.Data> {
 
     private TKContainer createContainer(IWorld world, BlockPos pos, BlockState state, int id, PlayerInventory playerInv, PlayerEntity player) {
         return new RegulatorContainer(id, playerInv, filter.at(world, pos));
+    }
+
+    @Override
+    protected boolean isNormalCube(IBlockReader world, BlockPos pos, BlockState state) {
+        return false;
     }
 
     @Override

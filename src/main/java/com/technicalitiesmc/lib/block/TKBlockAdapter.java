@@ -277,14 +277,13 @@ public class TKBlockAdapter extends Block implements RegistryExtendable {
         return max;
     }
 
-
     @Override
     public boolean isNormalCube(BlockState state, IBlockReader world, BlockPos pos) {
         if (!block.isNormalCube(world, pos, state)) return false;
         for (Util.ComponentInfo component : components) {
             if (!component.instance.isNormalCube(world, pos, state)) return false;
         }
-        return true;
+        return super.isNormalCube(state, world, pos);
     }
 
     @Override

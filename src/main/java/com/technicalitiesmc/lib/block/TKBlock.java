@@ -41,11 +41,6 @@ public abstract class TKBlock extends TKBlockBehavior {
         return VoxelShapes.fullCube();
     }
 
-    @Override
-    protected boolean isNormalCube(IBlockReader world, BlockPos pos, BlockState state) {
-        return state.getMaterial().isOpaque() && state.isCollisionShapeOpaque(world, pos) && !state.canProvidePower();
-    }
-
     public static abstract class WithData<D extends TKBlockData> extends TKBlock {
 
         private final BiFunction<WithData<D>, TKBlockDataHost, D> dataSupplier;

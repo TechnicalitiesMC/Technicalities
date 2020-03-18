@@ -111,7 +111,7 @@ public abstract class TKBlockBehavior {
     }
 
     protected boolean isNormalCube(IBlockReader world, BlockPos pos, BlockState state) {
-        return false;
+        return true;
     }
 
     protected boolean requiresRayTraceReconstruction() {

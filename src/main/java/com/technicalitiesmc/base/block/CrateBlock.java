@@ -60,9 +60,4 @@ public class CrateBlock extends TKBlock {
         return new ItemStack(i == 0 ? Blocks.TNT : i == 1 ? Blocks.PISTON : Blocks.SPONGE);
     }
 
-    @Override
-    protected boolean isNormalCube(IBlockReader world, BlockPos pos, BlockState state) {
-        return false;
-    }
-
 }
