@@ -125,6 +125,6 @@ public class TKBase {
     }
 
     public static void playSmallPistonSound(World world, BlockPos pos) {
-        world.playSound(null, pos, TKBase.SOUND_SMALL_PISTON, SoundCategory.BLOCKS, 0.15F, 1F);
+        world.playSound(null, pos, TKBase.SOUND_SMALL_PISTON, SoundCategory.BLOCKS, 0.2F, 1F);
     }
 }

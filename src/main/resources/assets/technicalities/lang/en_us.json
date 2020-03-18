@@ -109,5 +109,7 @@
   "container.technicalities.generic.paint_action.brown": "Paint Brown",
   "container.technicalities.generic.paint_action.green": "Paint Green",
   "container.technicalities.generic.paint_action.red": "Paint Red",
-  "container.technicalities.generic.paint_action.black": "Paint Black"
+  "container.technicalities.generic.paint_action.black": "Paint Black",
+  "container.technicalities.generic.muted_state.unmuted": "Mute",
+  "container.technicalities.generic.muted_state.muted": "Unmute"
 }
