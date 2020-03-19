@@ -2,16 +2,20 @@ package com.technicalitiesmc.pneumatics.tube.route;
 
 import com.technicalitiesmc.pneumatics.tube.MovingTubeStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.IntNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.Direction;
+import net.minecraftforge.common.util.Constants;
 
-import java.util.EnumMap;
+import java.util.ArrayDeque;
 import java.util.EnumSet;
+import java.util.Queue;
 
 public class RoundRobinRoutingStrategy implements RoutingStrategy {
 
     public static final RoundRobinRoutingStrategy INSTANCE = new RoundRobinRoutingStrategy();
 
-    private final EnumMap<Direction, Direction> lastDirection = new EnumMap<>(Direction.class);
+    private final Queue<Direction> visitOrder = new ArrayDeque<>();
 
     @Override
     public Route calculateRoute(RoutingContext context, MovingTubeStack stack) {
@@ -29,37 +33,48 @@ public class RoundRobinRoutingStrategy implements RoutingStrategy {
 
         if (context.isRemote()) return new SimpleRoute(false, null);
 
-        Direction lastDirection = this.lastDirection.get(from);
-        Direction direction = lastDirection == null ? routes.iterator().next() : findNext(lastDirection, routes);
-        this.lastDirection.put(from, direction);
-        return new SimpleRoute(false, direction);
+        Direction nextDirection = null;
+
+        EnumSet<Direction> unvisitedRoutes = EnumSet.copyOf(routes);
+        unvisitedRoutes.removeAll(visitOrder);
+        if (!unvisitedRoutes.isEmpty()) {
+            nextDirection = unvisitedRoutes.iterator().next();
+            visitOrder.add(nextDirection);
+        }
+
+        if(nextDirection == null) {
+            for (Direction possibleDirection : visitOrder) {
+                if (routes.contains(possibleDirection)) {
+                    nextDirection = possibleDirection;
+                    // Push to the end of the queue
+                    visitOrder.remove(nextDirection);
+                    visitOrder.add(nextDirection);
+                    break;
+                }
+            }
+        }
+
+        return new SimpleRoute(false, nextDirection);
     }
 
     @Override
     public CompoundNBT serialize() {
         CompoundNBT tag = new CompoundNBT();
-        this.lastDirection.forEach((from, to) -> {
-            tag.putInt(from.name().toLowerCase(), to.ordinal());
-        });
+        ListNBT list = new ListNBT();
+        for (Direction direction : this.visitOrder) {
+            list.add(IntNBT.valueOf(direction.ordinal()));
+        }
+        tag.put("visit_order", list);
         return tag;
     }
 
     @Override
     public void deserialize(CompoundNBT tag) {
-        this.lastDirection.clear();
-        for (Direction from : Direction.values()) {
-            if (!tag.contains(from.name().toLowerCase())) continue;
-            this.lastDirection.put(from, Direction.values()[tag.getInt(from.name().toLowerCase())]);
+        this.visitOrder.clear();
+        ListNBT list = tag.getList("visit_order", Constants.NBT.TAG_INT);
+        for (int i = 0; i < list.size(); i++) {
+            this.visitOrder.add(Direction.values()[list.getInt(i)]);
         }
-    }
-
-    private static Direction findNext(Direction current, EnumSet<Direction> values) {
-        Direction prev = null;
-        for (Direction d : values) {
-            if (prev == current) return d;
-            prev = d;
-        }
-        return values.iterator().next();
     }
 
 }

@@ -1,5 +1,7 @@
 package com.technicalitiesmc.lib.util;
 
+import com.technicalitiesmc.pneumatics.tube.module.TubeModule;
+
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -55,6 +57,10 @@ public class CollectionUtils {
         if (list.isEmpty()) return null;
         int idx = random.nextInt(list.size());
         return list.get(idx);
+    }
+
+    public static <T> Set<T> setOf(T... values) {
+        return new HashSet<>(Arrays.asList(values));
     }
 
 }

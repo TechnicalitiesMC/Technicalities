@@ -36,6 +36,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Component
 @BindModelTransformer(TubeModuleModelTransformer.class)
@@ -52,8 +53,16 @@ public class TubeModulesComponent extends TKBlockComponent.WithData<TubeModulesC
     @Component
     private BlockConnections connections;
 
+    @Nullable
+    private final Set<TubeModule.Type<?, ?>> supportedModules;
+
     public TubeModulesComponent() {
+        this(null);
+    }
+
+    public TubeModulesComponent(@Nullable Set<TubeModule.Type<?, ?>> supportedModules) {
         super(Data::new);
+        this.supportedModules = supportedModules;
     }
 
     public TubeModuleContainer getModuleContainer(IBlockReader world, BlockPos pos) {
@@ -108,10 +117,16 @@ public class TubeModulesComponent extends TKBlockComponent.WithData<TubeModulesC
                 LazyOptional<TubeModuleProvider> cap = item.getCapability(TUBE_MODULE_PROVIDER);
                 if (!cap.isPresent()) return ActionResultType.PASS;
 
+                TubeModuleProvider provider = cap.orElse(null);
+                TubeModule<?> module = provider.create(side);
+                if (supportedModules != null && !supportedModules.contains(module.getType())) {
+                    return ActionResultType.PASS;
+                }
+
                 if (world.isRemote()) return ActionResultType.SUCCESS;
 
-                container.place(side, cap.orElse(null));
-                if(!player.isCreative()) item.shrink(1);
+                container.place(side, module);
+                if (!player.isCreative()) item.shrink(1);
                 world.setBlockState(pos, state, 1 | 3 | 16 | 32);
                 return ActionResultType.SUCCESS;
             }

@@ -34,8 +34,7 @@ public class TubeModuleContainer {
         return modules.get(side);
     }
 
-    public void place(Direction side, TubeModuleProvider provider) {
-        TubeModule<?> module = provider.create(side);
+    public void place(Direction side, TubeModule<?> module) {
         modules.put(side, module);
         markDirty.run();
         BlockPos blockPos = pos.get();
