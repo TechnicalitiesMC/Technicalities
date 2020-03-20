@@ -65,6 +65,7 @@ public class TubeModulesComponent extends TKBlockComponent.WithData<TubeModulesC
         this.supportedModules = supportedModules;
     }
 
+    @Nullable
     public TubeModuleContainer getModuleContainer(IBlockReader world, BlockPos pos) {
         Data data = getData(world, pos);
         if (data == null) return null;

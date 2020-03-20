@@ -13,6 +13,7 @@ import com.technicalitiesmc.lib.util.CapabilityUtils;
 import com.technicalitiesmc.pneumatics.client.TubeRenderer;
 import com.technicalitiesmc.pneumatics.tube.*;
 import com.technicalitiesmc.pneumatics.tube.module.TubeModule;
+import com.technicalitiesmc.pneumatics.tube.module.TubeModuleContainer;
 import com.technicalitiesmc.pneumatics.tube.route.RoutingStrategy;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -141,9 +142,12 @@ public class TubeComponent extends TKBlockComponent.WithData<TubeComponent.Data>
         @Override
         public boolean isDeterministic(Direction direction) {
             if (modules != null) {
-                TubeModule<?> tubeModule = modules.getModuleContainer(getWorld(), getPos()).get(direction);
-                if (tubeModule != null) {
-                    return tubeModule.isDeterministic();
+                TubeModuleContainer moduleContainer = modules.getModuleContainer(getWorld(), getPos());
+                if (moduleContainer != null) {
+                    TubeModule<?> tubeModule = moduleContainer.get(direction);
+                    if (tubeModule != null) {
+                        return tubeModule.isDeterministic();
+                    }
                 }
             }
             return true;
@@ -153,9 +157,12 @@ public class TubeComponent extends TKBlockComponent.WithData<TubeComponent.Data>
         @Override
         public Optional<FlowPriority> getFlowPriority(Direction direction, ITubeStack stack) {
             if (modules != null) {
-                TubeModule<?> tubeModule = modules.getModuleContainer(getWorld(), getPos()).get(direction);
-                if (tubeModule != null) {
-                    return tubeModule.getFlowPriority(stack);
+                TubeModuleContainer moduleContainer = modules.getModuleContainer(getWorld(), getPos());
+                if (moduleContainer != null) {
+                    TubeModule<?> tubeModule = moduleContainer.get(direction);
+                    if (tubeModule != null) {
+                        return tubeModule.getFlowPriority(stack);
+                    }
                 }
             }
             if (connections.isConnected(host.getWorld(), host.getPos(), direction)) {
@@ -167,9 +174,12 @@ public class TubeComponent extends TKBlockComponent.WithData<TubeComponent.Data>
         @Override
         public boolean canTraverse(Direction direction, ITubeStack stack) {
             if (modules != null) {
-                TubeModule<?> tubeModule = modules.getModuleContainer(getWorld(), getPos()).get(direction);
-                if (tubeModule != null) {
-                    return tubeModule.canTraverse(stack);
+                TubeModuleContainer moduleContainer = modules.getModuleContainer(getWorld(), getPos());
+                if (moduleContainer != null) {
+                    TubeModule<?> tubeModule = moduleContainer.get(direction);
+                    if (tubeModule != null) {
+                        return tubeModule.canTraverse(stack);
+                    }
                 }
             }
             return true;
