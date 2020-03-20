@@ -14,10 +14,7 @@ import com.technicalitiesmc.pneumatics.tube.Tube;
 import com.technicalitiesmc.pneumatics.tube.TubeManager;
 import com.technicalitiesmc.pneumatics.tube.module.TubeModuleContainer;
 import com.technicalitiesmc.pneumatics.tube.module.TubeModuleProvider;
-import com.technicalitiesmc.pneumatics.tube.modules.ColorFilterModule;
-import com.technicalitiesmc.pneumatics.tube.modules.GlassLensModule;
-import com.technicalitiesmc.pneumatics.tube.modules.OneWayValveModule;
-import com.technicalitiesmc.pneumatics.tube.modules.SlimyMembraneModule;
+import com.technicalitiesmc.pneumatics.tube.modules.*;
 import net.minecraft.block.Block;
 import net.minecraft.item.*;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -41,9 +38,13 @@ public class TKPneumatics {
     public static final Block FILTER = new FilterBlock().asMCBlock();
 
     public static final Item TM_GLASS_LENS = itemFor(GlassLensModule::new);
-    public static final EnumMap<DyeColor, Item> TM_COLOR_FILTER = CollectionUtils.newFilledEnumMap(DyeColor.class, color -> itemFor(side -> new ColorFilterModule(side, color)));
+    public static final EnumMap<DyeColor, Item> TM_COLOR_FILTER = CollectionUtils.newFilledEnumMap(
+        DyeColor.class,
+        color -> itemFor((context, side) -> new ColorFilterModule(context, side, color))
+    );
     public static final Item TM_SLIMY_MEMBRANE = itemFor(SlimyMembraneModule::new);
     public static final Item TM_ONE_WAY_VALVE = itemFor(OneWayValveModule::new);
+    public static final Item TM_INSERTER = itemFor(InserterModule::new);
 
     public static void init(final FMLCommonSetupEvent event) {
         com.technicalitiesmc.pneumatics.network.TubeNetworkHandler.initialize();
@@ -81,6 +82,7 @@ public class TKPneumatics {
         }
         registry.register("tm_slimy_membrane", TM_SLIMY_MEMBRANE);
         registry.register("tm_one_way_valve", TM_ONE_WAY_VALVE);
+        registry.register("tm_inserter", TM_INSERTER);
     }
 
     private static BlockItem itemFor(Block block) {

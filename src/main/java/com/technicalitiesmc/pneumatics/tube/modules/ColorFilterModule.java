@@ -18,13 +18,13 @@ public class ColorFilterModule extends LensTubeModule<ColorFilterModule.Color> {
 
     private final DyeColor color;
 
-    public ColorFilterModule(Direction side, DyeColor color) {
-        super(TYPE, side);
+    public ColorFilterModule(Context context, Direction side, DyeColor color) {
+        super(TYPE, context, side);
         this.color = color;
     }
 
-    private ColorFilterModule(Direction side, CompoundNBT tag) {
-        super(TYPE, side, tag);
+    private ColorFilterModule(Context context, Direction side, CompoundNBT tag) {
+        super(TYPE, context, side, tag);
         this.color = DyeColor.values()[tag.getInt("color")];
     }
 

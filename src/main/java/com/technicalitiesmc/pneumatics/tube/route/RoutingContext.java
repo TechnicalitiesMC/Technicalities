@@ -17,4 +17,6 @@ public interface RoutingContext {
 
     Optional<FlowPriority> getPriority(Direction direction, ITubeStack stack);
 
+    boolean canTraverse(Direction direction, ITubeStack stack);
+
 }

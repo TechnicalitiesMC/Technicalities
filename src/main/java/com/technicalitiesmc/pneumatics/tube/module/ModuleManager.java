@@ -1,9 +1,6 @@
 package com.technicalitiesmc.pneumatics.tube.module;
 
-import com.technicalitiesmc.pneumatics.tube.modules.ColorFilterModule;
-import com.technicalitiesmc.pneumatics.tube.modules.GlassLensModule;
-import com.technicalitiesmc.pneumatics.tube.modules.OneWayValveModule;
-import com.technicalitiesmc.pneumatics.tube.modules.SlimyMembraneModule;
+import com.technicalitiesmc.pneumatics.tube.modules.*;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -19,6 +16,7 @@ public enum ModuleManager {
         register(ColorFilterModule.TYPE);
         register(OneWayValveModule.TYPE);
         register(SlimyMembraneModule.TYPE);
+        register(InserterModule.TYPE);
     }
 
     private void register(TubeModule.Type<?, ?> type) {

@@ -165,6 +165,11 @@ public class Tube {
             return host.getFlowPriority(direction, stack);
         }
 
+        @Override
+        public boolean canTraverse(Direction direction, ITubeStack stack) {
+            return host.canTraverse(direction, stack);
+        }
+
     }
 
 }

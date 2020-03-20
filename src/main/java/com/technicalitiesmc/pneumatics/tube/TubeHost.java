@@ -24,6 +24,8 @@ public interface TubeHost {
     @Nonnull
     Optional<FlowPriority> getFlowPriority(Direction direction, ITubeStack stack);
 
+    boolean canTraverse(Direction direction, ITubeStack stack);
+
     int output(ITubeStack stack, Direction side);
 
     void onStackRouted(ITubeStack stack);

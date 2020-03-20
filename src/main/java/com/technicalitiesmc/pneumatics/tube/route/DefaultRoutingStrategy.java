@@ -4,6 +4,7 @@ import com.technicalitiesmc.pneumatics.tube.FlowPriority;
 import com.technicalitiesmc.lib.util.CollectionUtils;
 import com.technicalitiesmc.pneumatics.tube.MovingTubeStack;
 import net.minecraft.util.Direction;
+import net.minecraftforge.common.util.Lazy;
 
 import javax.annotation.Nonnull;
 import java.util.*;
@@ -28,15 +29,22 @@ public class DefaultRoutingStrategy implements RoutingStrategy {
         Direction opposite = from.getOpposite();
 
         class PossibleRoute {
-            private Direction direction;
-            private boolean deterministic;
-            private FlowPriority priority;
+            private final Direction direction;
+            private final boolean deterministic;
+            private final FlowPriority priority;
+            private final Lazy<Boolean> traversable;
 
-            private PossibleRoute(Direction direction, FlowPriority priority) {
+            private PossibleRoute(Direction direction, FlowPriority priority, Lazy<Boolean> traversable) {
                 this.direction = direction;
                 this.deterministic = ctx.isDeterministic(direction);
                 this.priority = priority;
+                this.traversable = traversable;
             }
+
+            private boolean isTraversable() {
+                return traversable.get();
+            }
+
         }
 
         // Work out which are our potential routes
@@ -45,12 +53,8 @@ public class DefaultRoutingStrategy implements RoutingStrategy {
             if (direction == from) continue;
             Optional<FlowPriority> priority = ctx.getPriority(direction, stack);
             if (!priority.isPresent()) continue;
-            routeMap.put(direction, new PossibleRoute(direction, priority.get()));
+            routeMap.put(direction, new PossibleRoute(direction, priority.get(), Lazy.of(() -> ctx.canTraverse(direction, stack))));
         }
-
-//        if (stack.getPos().equals(new BlockPos(-15, 56, 13))) {
-//            System.out.println(routeMap);
-//        }
 
         // If there aren't any routes, drop the stack
         if (routeMap.isEmpty()) {
@@ -61,8 +65,7 @@ public class DefaultRoutingStrategy implements RoutingStrategy {
         if (routeMap.size() == 1) {
             PossibleRoute route = routeMap.values().iterator().next();
             if (!route.deterministic && ctx.isRemote()) return SimpleRoute.NON_DETERMINISTIC;
-//            if (!route.isTraversable()) return new SimpleRoute(route.deterministic, null);
-//            INBTSerializable<CompoundNBT> previousData = stack.getPreviousRoutingData(null);
+            if (!route.isTraversable()) return new SimpleRoute(route.deterministic, null);
             return new SimpleRoute(route.deterministic, route.direction);
         }
 
@@ -70,7 +73,7 @@ public class DefaultRoutingStrategy implements RoutingStrategy {
         if (routeMap.containsKey(opposite)) {
             PossibleRoute route = routeMap.get(opposite);
             if (!route.deterministic && ctx.isRemote()) return SimpleRoute.NON_DETERMINISTIC;
-            if (/*route.isTraversable() &&*/ route.priority == FlowPriority.NORMAL) {
+            if (route.isTraversable() && route.priority == FlowPriority.NORMAL) {
                 return new SimpleRoute(route.deterministic, route.direction);
             }
         }
@@ -84,12 +87,12 @@ public class DefaultRoutingStrategy implements RoutingStrategy {
 
         // Discard non-traversable routes
         List<PossibleRoute> routes = new ArrayList<>(routeMap.values());
-//        routes.removeIf(r -> !r.isTraversable());
+        routes.removeIf(r -> !r.isTraversable());
 
         // If there are no routes, drop the stack
-//        if (routes.isEmpty()) return new SimpleRoute(false, null);
+        if (routes.isEmpty()) return new SimpleRoute(false, null);
         // If there is just one route, return it
-//        if (routes.size() == 1) return new SimpleRoute(false, routes.get(0).direction);
+        if (routes.size() == 1) return new SimpleRoute(false, routes.get(0).direction);
 
         // Sort by priority (normal priority first)
         routes.sort(Comparator.comparing(r -> r.priority));

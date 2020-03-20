@@ -1,5 +1,7 @@
 package com.technicalitiesmc.pneumatics.tube.module;
 
+import com.technicalitiesmc.api.tube.ITubeStack;
+import com.technicalitiesmc.pneumatics.block.components.TubeComponent;
 import com.technicalitiesmc.pneumatics.network.ModuleUpdatedPacket;
 import com.technicalitiesmc.pneumatics.network.TubeNetworkHandler;
 import net.minecraft.nbt.CompoundNBT;
@@ -9,6 +11,7 @@ import net.minecraft.world.World;
 
 import java.util.Collection;
 import java.util.EnumMap;
+import java.util.Map;
 import java.util.function.Supplier;
 
 public class TubeModuleContainer {
@@ -18,6 +21,7 @@ public class TubeModuleContainer {
     private final Supplier<BlockPos> pos;
     private final Runnable markDirty;
     private final Runnable refreshModel;
+    private final Map<Direction, ModuleContext> contexts = new EnumMap<>(Direction.class);
 
     public TubeModuleContainer(Supplier<World> world, Supplier<BlockPos> pos, Runnable markDirty, Runnable refreshModel) {
         this.world = world;
@@ -32,6 +36,10 @@ public class TubeModuleContainer {
 
     public TubeModule<?> get(Direction side) {
         return modules.get(side);
+    }
+
+    public TubeModule.Context getContext(Direction side) {
+        return contexts.computeIfAbsent(side, ModuleContext::new);
     }
 
     public void place(Direction side, TubeModule<?> module) {
@@ -74,18 +82,38 @@ public class TubeModuleContainer {
             if (!tag.contains(key)) continue;
             CompoundNBT t = tag.getCompound(key);
             TubeModule.Type<?, ?> type = ModuleManager.INSTANCE.get(t.getString("type"));
-            modules.put(side, type.create(side, t.getCompound("data")));
+            modules.put(side, type.create(getContext(side), side, t.getCompound("data")));
         }
         refreshModel.run();
     }
 
     public void onUpdate(Direction side, TubeModule.Type<?, ?> type, CompoundNBT data) {
         if (type != null) {
-            modules.put(side, type.create(side, data));
+            modules.put(side, type.create(getContext(side), side, data));
         } else {
             modules.remove(side);
         }
         refreshModel.run();
+    }
+
+    private class ModuleContext implements TubeModule.Context {
+
+        private final Direction side;
+
+        private ModuleContext(Direction side) {
+            this.side = side;
+        }
+
+        @Override
+        public boolean isRemote() {
+            return world.get().isRemote();
+        }
+
+        @Override
+        public boolean canOutput(ITubeStack stack) {
+            return TubeComponent.output(world.get(), pos.get(), side, stack, true) == 0;
+        }
+
     }
 
 }

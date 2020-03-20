@@ -1,5 +1,5 @@
 {
-  "parent": "technicalities:tube_module/cuboid",
+  "parent": "technicalities:tube_module/lens",
   "textures": {
     "texture": "technicalities:blocks/tube_module/inserter"
   }

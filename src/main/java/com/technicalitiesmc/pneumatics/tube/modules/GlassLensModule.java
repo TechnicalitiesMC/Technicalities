@@ -15,12 +15,12 @@ public class GlassLensModule extends LensTubeModule<TubeModuleState.Default> {
 
     public static final Type<GlassLensModule, TubeModuleState.Default> TYPE = new Type<>("glass_lens", TubeModuleState.Default.class, GlassLensModule::new);
 
-    public GlassLensModule(Direction side) {
-        super(TYPE, side);
+    public GlassLensModule(Context context, Direction side) {
+        super(TYPE, context, side);
     }
 
-    private GlassLensModule(Direction side, CompoundNBT tag) {
-        super(TYPE, side, tag);
+    private GlassLensModule(Context context, Direction side, CompoundNBT tag) {
+        super(TYPE, context, side, tag);
     }
 
     @Override

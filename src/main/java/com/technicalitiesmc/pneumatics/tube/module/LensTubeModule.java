@@ -18,12 +18,17 @@ public abstract class LensTubeModule<S extends Enum<S> & TubeModuleState<S>> ext
         s -> VoxelShapeHelper.rotate(SHAPE, s)
     );
 
-    protected LensTubeModule(Type<?, S> type, Direction side) {
-        super(type, side);
+    protected LensTubeModule(Type<?, S> type, Context context, Direction side) {
+        super(type, context, side);
     }
 
-    protected LensTubeModule(Type<?, S> type, Direction side, CompoundNBT tag) {
-        super(type, side, tag);
+    protected LensTubeModule(Type<?, S> type, Context context, Direction side, CompoundNBT tag) {
+        super(type, context, side, tag);
+    }
+
+    @Override
+    public boolean isDeterministic() {
+        return true;
     }
 
     public RenderType getRenderLayer() {

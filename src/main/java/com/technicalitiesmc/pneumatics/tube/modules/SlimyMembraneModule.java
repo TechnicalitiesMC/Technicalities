@@ -15,12 +15,12 @@ public class SlimyMembraneModule extends LensTubeModule<TubeModuleState.Default>
 
     public static final Type<SlimyMembraneModule, TubeModuleState.Default> TYPE = new Type<>("slimy_membrane", TubeModuleState.Default.class, SlimyMembraneModule::new);
 
-    public SlimyMembraneModule(Direction side) {
-        super(TYPE, side);
+    public SlimyMembraneModule(Context context, Direction side) {
+        super(TYPE, context, side);
     }
 
-    private SlimyMembraneModule(Direction side, CompoundNBT tag) {
-        super(TYPE, side, tag);
+    private SlimyMembraneModule(Context context, Direction side, CompoundNBT tag) {
+        super(TYPE, context, side, tag);
     }
 
     @Override

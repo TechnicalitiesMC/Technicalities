@@ -140,6 +140,12 @@ public class TubeComponent extends TKBlockComponent.WithData<TubeComponent.Data>
 
         @Override
         public boolean isDeterministic(Direction direction) {
+            if (modules != null) {
+                TubeModule<?> tubeModule = modules.getModuleContainer(getWorld(), getPos()).get(direction);
+                if (tubeModule != null) {
+                    return tubeModule.isDeterministic();
+                }
+            }
             return true;
         }
 
@@ -159,24 +165,19 @@ public class TubeComponent extends TKBlockComponent.WithData<TubeComponent.Data>
         }
 
         @Override
-        public int output(ITubeStack stack, Direction side) {
-            if (side == null) {
-                if (getWorld().isRemote()) return 0;
-                Block.spawnAsEntity(getWorld(), getPos(), stack.getStack());
-                return 0;
+        public boolean canTraverse(Direction direction, ITubeStack stack) {
+            if (modules != null) {
+                TubeModule<?> tubeModule = modules.getModuleContainer(getWorld(), getPos()).get(direction);
+                if (tubeModule != null) {
+                    return tubeModule.canTraverse(stack);
+                }
             }
+            return true;
+        }
 
-            ITubeStackConsumer tsc = CapabilityUtils.getCapability(getWorld(), getPos().offset(side), TUBE_STACK_CONSUMER, side.getOpposite());
-            if (!(tsc instanceof Input) && host.getWorld().isRemote()) return 0;
-            if (tsc != null) {
-                return tsc.accept(stack, false);
-            }
-            if (host.getWorld().isRemote()) return 0;
-            IItemHandler itemHandler = CapabilityUtils.getCapability(getWorld(), getPos().offset(side), ITEM_HANDLER, side.getOpposite());
-            if (itemHandler != null) {
-                return InventoryUtils.transferStack(stack.getStack(), itemHandler, false).getCount();
-            }
-            return 0;
+        @Override
+        public int output(ITubeStack stack, Direction side) {
+            return TubeComponent.output(getWorld(), getPos(), side, stack, false);
         }
 
         @Override
@@ -299,6 +300,28 @@ public class TubeComponent extends TKBlockComponent.WithData<TubeComponent.Data>
 
     public interface RouteCallback {
         void onStackRouted(World world, BlockPos pos, ITubeStack stack);
+    }
+
+    public static int output(World world, BlockPos pos, Direction side, ITubeStack stack, boolean simulate) {
+        if (side == null) {
+            if (world.isRemote()) return 0;
+            if (!simulate) {
+                Block.spawnAsEntity(world, pos, stack.getStack());
+            }
+            return 0;
+        }
+
+        ITubeStackConsumer tsc = CapabilityUtils.getCapability(world, pos.offset(side), TUBE_STACK_CONSUMER, side.getOpposite());
+        if (!(tsc instanceof Input) && world.isRemote()) return 0;
+        if (tsc != null) {
+            return tsc.accept(stack, simulate);
+        }
+        if (world.isRemote()) return 0;
+        IItemHandler itemHandler = CapabilityUtils.getCapability(world, pos.offset(side), ITEM_HANDLER, side.getOpposite());
+        if (itemHandler != null) {
+            return InventoryUtils.transferStack(stack.getStack(), itemHandler, simulate).getCount();
+        }
+        return 0;
     }
 
 }

@@ -11,26 +11,36 @@ import net.minecraft.util.Direction;
 
 import java.util.Optional;
 
-public class OneWayValveModule extends LensTubeModule<TubeModuleState.Default> {
+public class InserterModule extends LensTubeModule<TubeModuleState.Default> {
 
-    public static final Type<OneWayValveModule, TubeModuleState.Default> TYPE = new Type<>("one_way_valve", TubeModuleState.Default.class, OneWayValveModule::new);
+    public static final Type<InserterModule, TubeModuleState.Default> TYPE = new Type<>("inserter", TubeModuleState.Default.class, InserterModule::new);
 
-    public OneWayValveModule(Context context, Direction side) {
+    public InserterModule(Context context, Direction side) {
         super(TYPE, context, side);
     }
 
-    private OneWayValveModule(Context context, Direction side, CompoundNBT tag) {
+    private InserterModule(Context context, Direction side, CompoundNBT tag) {
         super(TYPE, context, side, tag);
     }
 
     @Override
+    public boolean isDeterministic() {
+        return false;
+    }
+
+    @Override
     public ItemStack getItem() {
-        return new ItemStack(TKPneumatics.TM_ONE_WAY_VALVE);
+        return new ItemStack(TKPneumatics.TM_INSERTER);
     }
 
     @Override
     public Optional<FlowPriority> getFlowPriority(ITubeStack stack) {
-        return Optional.empty();
+        return Optional.of(FlowPriority.NORMAL);
+    }
+
+    @Override
+    public boolean canTraverse(ITubeStack stack) {
+        return getContext().canOutput(stack);
     }
 
 }

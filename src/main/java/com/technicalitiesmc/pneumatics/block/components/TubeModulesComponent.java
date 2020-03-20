@@ -118,7 +118,7 @@ public class TubeModulesComponent extends TKBlockComponent.WithData<TubeModulesC
                 if (!cap.isPresent()) return ActionResultType.PASS;
 
                 TubeModuleProvider provider = cap.orElse(null);
-                TubeModule<?> module = provider.create(side);
+                TubeModule<?> module = provider.create(container.getContext(side), side);
                 if (supportedModules != null && !supportedModules.contains(module.getType())) {
                     return ActionResultType.PASS;
                 }
