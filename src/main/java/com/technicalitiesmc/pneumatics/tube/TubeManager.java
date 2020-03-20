@@ -7,10 +7,6 @@ import com.technicalitiesmc.pneumatics.network.StackRoutedPacket;
 import com.technicalitiesmc.pneumatics.network.TubeNetworkHandler;
 import com.technicalitiesmc.pneumatics.tube.route.DummyRoute;
 import com.technicalitiesmc.pneumatics.tube.route.Route;
-import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
-import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
-import it.unimi.dsi.fastutil.longs.LongArrayList;
-import it.unimi.dsi.fastutil.longs.LongList;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -19,9 +15,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.function.LongConsumer;
 
 public interface TubeManager {
 
@@ -42,7 +39,7 @@ public interface TubeManager {
     class Server extends WorldSavedData implements TubeManager {
 
         private final World world;
-        private final Long2ObjectMap<MovingTubeStack> stacks = new Long2ObjectOpenHashMap<>();
+        private final Map<LongKey, MovingTubeStack> stacks = new ConcurrentHashMap<>();
 
         private final AtomicLong id = new AtomicLong();
 
@@ -74,9 +71,7 @@ public interface TubeManager {
 
         @Override
         public void onStackJoinedTube(MovingTubeStack stack) {
-            synchronized (this.stacks) {
-                if (this.stacks.put(stack.getID(), stack) != null) return; // Skip if already tracked
-            }
+            if (this.stacks.put(new LongKey(stack.getID()), stack) != null) return; // Skip if already tracked
             TubeNetworkHandler.INSTANCE.sendToAllWatching(
                 new StackJoinedTubePacket(stack.getID(), stack.getPos(), stack.getFrom(), stack),
                 world, stack.getPos()
@@ -86,18 +81,13 @@ public interface TubeManager {
         @Override
         public void onStacksLoaded(Set<MovingTubeStack> stacks) {
             for (MovingTubeStack stack : stacks) {
-                synchronized (this.stacks) {
-                    this.stacks.put(stack.getID(), stack);
-                }
+                this.stacks.put(new LongKey(stack.getID()), stack);
             }
         }
 
         @Override
         public void onStackMutated(long id, TubeStackMutation mutation) {
-            BlockPos pos;
-            synchronized (this.stacks) {
-                pos = this.stacks.get(id).getPos();
-            }
+            BlockPos pos = this.stacks.get(new LongKey(id)).getPos();
             TubeNetworkHandler.INSTANCE.sendToAllWatching(
                 new StackMutatedPacket(id, mutation),
                 world, pos
@@ -106,22 +96,16 @@ public interface TubeManager {
 
         @Override
         public void tick() {
-            synchronized (this.stacks) {
-                tickStacks(world, this.stacks);
-            }
+            tickStacks(world, this.stacks);
         }
 
-        private static void tickStacks(World world, Long2ObjectMap<MovingTubeStack> stacks) {
+        private static void tickStacks(World world, Map<LongKey, MovingTubeStack> stacks) {
             world.getProfiler().startSection(Technicalities.MODID + ".tube_stack_tick");
-            LongList removed = new LongArrayList();
-            for (MovingTubeStack stack : stacks.values()) {
-                if (!stack.isValid()) {
-                    removed.add(stack.getID());
-                    continue;
-                }
+            stacks.values().removeIf(stack -> {
+                if (!stack.isValid()) return true;
                 stack.tick();
-            }
-            removed.forEach((LongConsumer) stacks::remove);
+                return false;
+            });
             world.getProfiler().endSection();
         }
 
@@ -147,8 +131,8 @@ public interface TubeManager {
     @OnlyIn(Dist.CLIENT)
     class Client implements TubeManager {
 
-        private final Long2ObjectMap<Route> routes = new Long2ObjectOpenHashMap<>();
-        private final Long2ObjectMap<MovingTubeStack> stacks = new Long2ObjectOpenHashMap<>();
+        private final Map<LongKey, Route> routes = new ConcurrentHashMap<>();
+        private final Map<LongKey, MovingTubeStack> stacks = new ConcurrentHashMap<>();
         private final World world;
 
         public Client(World world) {
@@ -162,59 +146,71 @@ public interface TubeManager {
 
         @Override
         public Route awaitRoute(long id) {
-            synchronized (routes) {
-                Route existingRoute = routes.remove(id);
-                if (existingRoute != null) return existingRoute;
+            LongKey key = new LongKey(id);
+            Route existingRoute = routes.remove(key);
+            if (existingRoute != null) return existingRoute;
 
-                Route dummyRoute = new DummyRoute();
-                routes.put(id, dummyRoute);
-                return dummyRoute;
-            }
+            Route dummyRoute = new DummyRoute();
+            routes.put(key, dummyRoute);
+            return dummyRoute;
         }
 
         @Override
         public void onStackRouted(long id, BlockPos pos, Route route) {
-            synchronized (routes) {
-                Route existingRoute = routes.remove(id);
-                if (existingRoute instanceof DummyRoute) {
-                    ((DummyRoute) existingRoute).updateRoute(route);
-                } else {
-                    routes.put(id, route);
-                }
+            LongKey key = new LongKey(id);
+            Route existingRoute = routes.remove(key);
+            if (existingRoute instanceof DummyRoute) {
+                ((DummyRoute) existingRoute).updateRoute(route);
+            } else {
+                routes.put(key, route);
             }
         }
 
         @Override
         public void onStackJoinedTube(MovingTubeStack stack) {
-            synchronized (this.stacks) {
-                this.stacks.put(stack.getID(), stack);
-            }
+            this.stacks.put(new LongKey(stack.getID()), stack);
         }
 
         @Override
         public void onStacksLoaded(Set<MovingTubeStack> stacks) {
             for (MovingTubeStack stack : stacks) {
-                synchronized (this.stacks) {
-                    this.stacks.put(stack.getID(), stack);
-                }
+                this.stacks.put(new LongKey(stack.getID()), stack);
             }
         }
 
         @Override
         public void onStackMutated(long id, TubeStackMutation mutation) {
-            MovingTubeStack stack;
-            synchronized (this.stacks) {
-                stack = this.stacks.get(id);
-            }
+            MovingTubeStack stack = this.stacks.get(new LongKey(id));
             if (stack == null) return;
             stack.apply(mutation);
         }
 
         @Override
         public void tick() {
-            synchronized (this.stacks) {
-                Server.tickStacks(world, this.stacks);
-            }
+            Server.tickStacks(world, this.stacks);
+        }
+
+    }
+
+    final class LongKey {
+
+        private final long key;
+
+        public LongKey(long key) {
+            this.key = key;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            LongKey longKey = (LongKey) o;
+            return key == longKey.key;
+        }
+
+        @Override
+        public int hashCode() {
+            return Long.hashCode(key);
         }
 
     }
