@@ -74,7 +74,9 @@ public interface TubeManager {
 
         @Override
         public void onStackJoinedTube(MovingTubeStack stack) {
-            if (stacks.put(stack.getID(), stack) != null) return; // Skip if already tracked
+            synchronized (this.stacks) {
+                if (this.stacks.put(stack.getID(), stack) != null) return; // Skip if already tracked
+            }
             TubeNetworkHandler.INSTANCE.sendToAllWatching(
                 new StackJoinedTubePacket(stack.getID(), stack.getPos(), stack.getFrom(), stack),
                 world, stack.getPos()
@@ -84,21 +86,29 @@ public interface TubeManager {
         @Override
         public void onStacksLoaded(Set<MovingTubeStack> stacks) {
             for (MovingTubeStack stack : stacks) {
-                this.stacks.put(stack.getID(), stack);
+                synchronized (this.stacks) {
+                    this.stacks.put(stack.getID(), stack);
+                }
             }
         }
 
         @Override
         public void onStackMutated(long id, TubeStackMutation mutation) {
+            BlockPos pos;
+            synchronized (this.stacks) {
+                pos = this.stacks.get(id).getPos();
+            }
             TubeNetworkHandler.INSTANCE.sendToAllWatching(
                 new StackMutatedPacket(id, mutation),
-                world, stacks.get(id).getPos()
+                world, pos
             );
         }
 
         @Override
         public void tick() {
-            tickStacks(world, stacks);
+            synchronized (this.stacks) {
+                tickStacks(world, this.stacks);
+            }
         }
 
         private static void tickStacks(World world, Long2ObjectMap<MovingTubeStack> stacks) {
@@ -176,26 +186,35 @@ public interface TubeManager {
 
         @Override
         public void onStackJoinedTube(MovingTubeStack stack) {
-            stacks.put(stack.getID(), stack);
-        }
-
-        @Override
-        public void onStacksLoaded(Set<MovingTubeStack> stacks) {
-            for (MovingTubeStack stack : stacks) {
+            synchronized (this.stacks) {
                 this.stacks.put(stack.getID(), stack);
             }
         }
 
         @Override
+        public void onStacksLoaded(Set<MovingTubeStack> stacks) {
+            for (MovingTubeStack stack : stacks) {
+                synchronized (this.stacks) {
+                    this.stacks.put(stack.getID(), stack);
+                }
+            }
+        }
+
+        @Override
         public void onStackMutated(long id, TubeStackMutation mutation) {
-            MovingTubeStack stack = stacks.get(id);
+            MovingTubeStack stack;
+            synchronized (this.stacks) {
+                stack = this.stacks.get(id);
+            }
             if (stack == null) return;
             stack.apply(mutation);
         }
 
         @Override
         public void tick() {
-            Server.tickStacks(world, stacks);
+            synchronized (this.stacks) {
+                Server.tickStacks(world, this.stacks);
+            }
         }
 
     }
