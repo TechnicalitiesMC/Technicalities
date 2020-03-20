@@ -3,6 +3,7 @@ package com.technicalitiesmc.pneumatics;
 import com.technicalitiesmc.Technicalities;
 import com.technicalitiesmc.api.tube.ITubeStackConsumer;
 import com.technicalitiesmc.lib.block.components.DisabledBlockConnections;
+import com.technicalitiesmc.lib.item.TKBlockItem;
 import com.technicalitiesmc.lib.util.CapabilityUtils;
 import com.technicalitiesmc.lib.util.CollectionUtils;
 import com.technicalitiesmc.lib.util.MultiRegistry;
@@ -47,7 +48,6 @@ public class TKPneumatics {
     public static final Item TM_INSERTER = itemFor(InserterModule::new);
 
     public static void init(final FMLCommonSetupEvent event) {
-        com.technicalitiesmc.pneumatics.network.TubeNetworkHandler.initialize();
         TubeNetworkHandler.initialize();
         registerCapabilities();
     }
@@ -86,7 +86,7 @@ public class TKPneumatics {
     }
 
     private static BlockItem itemFor(Block block) {
-        return new BlockItem(block, new Item.Properties().group(CREATIVE_TAB));
+        return new TKBlockItem(block, new Item.Properties().group(CREATIVE_TAB));
     }
 
     private static TubeModuleItem itemFor(TubeModuleProvider provider) {

@@ -2,6 +2,7 @@ package com.technicalitiesmc.base.item;
 
 import com.technicalitiesmc.Technicalities;
 import com.technicalitiesmc.base.TKBase;
+import com.technicalitiesmc.lib.item.TKItem;
 import com.technicalitiesmc.lib.util.TextUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
@@ -34,7 +35,7 @@ import java.util.*;
 import java.util.function.Predicate;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, modid = Technicalities.MODID)
-public class ItemTagItem extends Item {
+public class ItemTagItem extends TKItem {
 
     private boolean wasShowingDetailedTooltip = false;
     private long currentSeed = 0;

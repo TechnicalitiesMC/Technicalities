@@ -1,5 +1,6 @@
 package com.technicalitiesmc.pneumatics.item;
 
+import com.technicalitiesmc.lib.item.TKItem;
 import com.technicalitiesmc.pneumatics.tube.module.TubeModuleProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -13,7 +14,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class TubeModuleItem extends Item implements ICapabilityProvider {
+public class TubeModuleItem extends TKItem implements ICapabilityProvider {
 
     @CapabilityInject(TubeModuleProvider.class)
     private static Capability<TubeModuleProvider> TUBE_MODULE_PROVIDER;

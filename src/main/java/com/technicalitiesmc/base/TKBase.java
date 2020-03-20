@@ -6,6 +6,8 @@ import com.technicalitiesmc.base.block.components.Labelable;
 import com.technicalitiesmc.base.container.*;
 import com.technicalitiesmc.base.item.ItemTagItem;
 import com.technicalitiesmc.base.network.TKBNetworkHandler;
+import com.technicalitiesmc.lib.item.TKBlockItem;
+import com.technicalitiesmc.lib.item.TKItem;
 import com.technicalitiesmc.lib.util.CapabilityUtils;
 import com.technicalitiesmc.lib.util.MultiRegistry;
 import net.minecraft.block.Block;
@@ -113,11 +115,11 @@ public class TKBase {
     }
 
     private static Item item(Item.Properties properties) {
-        return new Item(properties.group(TAB_UTILS));
+        return new TKItem(properties.group(TAB_UTILS));
     }
 
     private static BlockItem itemFor(Block block) {
-        return new BlockItem(block, new Item.Properties().group(TAB_UTILS));
+        return new TKBlockItem(block, new Item.Properties().group(TAB_UTILS));
     }
 
     private static SoundEvent soundFor(String name) {
