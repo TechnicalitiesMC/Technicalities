@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "LLL",
+    "LSL",
+    "LLL"
+  ],
+  "key": {
+    "L": {
+      "item": "technicalities:tm_glass_lens"
+    },
+    "S": {
+      "tag": "forge:gems/quartz"
+    }
+  },
+  "result": {
+    "item": "technicalities:tm_inserter",
+    "count": 8
+  }
+}
